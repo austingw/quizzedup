@@ -9,6 +9,7 @@ class Trivia(models.Model):
     answer = models.CharField(max_length=200)
     correct = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    submitted_at = models.DateTimeField(auto_now_add=True)
 
 class UserScores(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
