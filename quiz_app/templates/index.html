@@ -1,0 +1,10 @@
+{% extends 'base.html' %} {% block content %}
+<h1>{{ question.question }}</h1>
+
+<form method="post" action="">
+  {% csrf_token %}
+  <input type="hidden" name="question_id" value="{{ question.id }}" />
+  <button type="submit" name="answer" value="True">True</button>
+  <button type="submit" name="answer" value="False">False</button>
+</form>
+{% endblock %}
