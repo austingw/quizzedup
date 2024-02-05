@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Trivia Zone</title>
 
-    <script src="{% static 'htmx.js' %}"></script>
+    <script src="{% static 'htmx.min.js' %}"></script>
   </head>
   <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
     <div class="mt-4">{% block content %} {% endblock %}</div>
