@@ -1,10 +1,24 @@
 {% extends 'base.html' %} {% block content %}
 <h1>{{ question.question }}</h1>
 
-<form method="post" action="">
+<form
+  method="post"
+  hx-post="{% url 'answer' %}"
+  hx-target="#answered"
+  hx-swap="innerHTML"
+  hx-trigger="submit"
+>
   {% csrf_token %}
-  <input type="hidden" name="question_id" value="{{ question.id }}" />
-  <button type="submit" name="answer" value="True">True</button>
-  <button type="submit" name="answer" value="False">False</button>
+  <input type="hidden" name="question" value="{{ question }}" />
+  <input
+    type="hidden"
+    name="correct_answer"
+    value="{{ question.correct_answer }}"
+  />
+  <button type="submit" name="user_answer" value="True">True</button>
+  <button type="submit" name="user_answer" value="False">False</button>
 </form>
+<div id="answered">
+  {% if correct %} {% include "partials/answered.html" %} {% endif %}
+</div>
 {% endblock %}
