@@ -1,0 +1,18 @@
+<h1>{{ question.question }}</h1>
+<form
+  method="post"
+  hx-post="{% url 'answer' %}"
+  hx-target="#answered"
+  hx-swap="innerHTML"
+  hx-trigger="submit"
+>
+  {% csrf_token %}
+  <input type="hidden" name="question" value="{{ question.question }}" />
+  <input
+    type="hidden"
+    name="correct_answer"
+    value="{{ question.correct_answer }}"
+  />
+  <button type="submit" name="user_answer" value="True">True</button>
+  <button type="submit" name="user_answer" value="False">False</button>
+</form>

@@ -16,7 +16,7 @@ def index(request):
         if 'results' in data and len(data['results']) > 0:
             question = data['results'][0]  # Extract the first question
         else:
-            return HttpResponse('Error: No results from API')
+            return HttpResponse('Error: No results from the Open Trivia Database, wait a few seconds and refresh.')
     elif request.method == 'POST':
         question = request.POST.get('question')  # Retrieve the current question from the POST data
         if not question:
@@ -54,7 +54,16 @@ def answer(request):
 
     else:
         return HttpResponse('Invalid request')
-    
+
+def new_question(request):
+    response = requests.get("https://opentdb.com/api.php?amount=1&type=boolean")
+    data = response.json()
+    if 'results' in data and len(data['results']) > 0:
+        question = data['results'][0]  # Extract the first question
+        return render(request, 'partials/new_question.html', {'question': question})
+    else:
+        return JsonResponse({'error': 'No results from the Open Trivia Database, wait a few seconds and refresh.'})
+
 def custom_login(request):
     if request.method == 'POST':
         username = request.POST['username']
