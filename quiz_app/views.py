@@ -1,7 +1,10 @@
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login
+from django import forms
 from django.core.paginator import Paginator
 from .models import Trivia, UserScores
 
@@ -64,18 +67,36 @@ def new_question(request):
     else:
         return JsonResponse({'error': 'No results from the Open Trivia Database, wait a few seconds and refresh.'})
 
+class LoginForm(AuthenticationForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+
+class SignupForm(UserCreationForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+
 def custom_login(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            user = form.get_user()
             login(request, user)
             return redirect('index')
-        else:
-            return HttpResponse('Invalid username or password')
     else:
-        return render(request, 'login.html')
+        form = LoginForm()
+    return render(request, 'login.html', {'form': form, 'form_type': 'login'})
+
+def custom_signup(request):
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('index')
+    else:
+        form = SignupForm()
+    return render(request, 'signup.html', {'form': form, 'form_type': 'signup'})
 
 def leaderboard(request):
     scores = UserScores.objects.order_by('-score')  # Fetch the scores and order them in descending order
