@@ -19,8 +19,3 @@ class UserScores(models.Model):
 def create_user_scores(sender, instance, created, **kwargs):
     if created:
         UserScores.objects.create(user=instance)
-
-@receiver(post_save, sender=User)
-def save_user_scores(sender, instance, **kwargs):
-    UserScores.objects.get_or_create(user=instance)
-    instance.userscores.save()
