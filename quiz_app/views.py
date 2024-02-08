@@ -97,12 +97,8 @@ def custom_signup(request):
     else:
         form = SignupForm()
     return render(request, 'signup.html', {'form': form, 'form_type': 'signup'})
-
+    
 def leaderboard(request):
-    scores = UserScores.objects.order_by('-score')  # Fetch the scores and order them in descending order
-    paginator = Paginator(scores, 10)  # Create a Paginator object
+    scores = UserScores.objects.all().order_by('-score')
 
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)  # Get the scores for the current page
-
-    return render(request, 'leaderboard.html', {'page_obj': page_obj})  # Pass the scores to the template
+    return render(request, 'leaderboard.html', {'scores': scores})
