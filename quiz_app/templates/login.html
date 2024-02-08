@@ -1,11 +1,15 @@
 {% extends 'base.html' %} {% block content %}
 <div id="login-form">
-  <form
-    method="post"
-    hx-post="{% url 'custom_login' %}"
-    hx-target="#auth-forms"
-    hx-swap="outerHTML"
-  >
+  <form method="post" action="{% url 'custom_login' %}">
+    {% csrf_token %} {{ form.as_p }}
+    <button type="submit">Log in</button>
+  </form>
+</div>
+
+<a href="{% url 'custom_signup' %}">Sign up</a>
+{% endblock %} 200 1145 {% extends 'base.html' %} {% block content %}
+<div id="login-form">
+  <form method="post" action="{% url 'custom_login' %}">
     {% csrf_token %} {{ form.as_p }}
     <button type="submit">Log in</button>
   </form>
