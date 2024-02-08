@@ -3,7 +3,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django import forms
 from django.core.paginator import Paginator
 from .models import Trivia, UserScores
@@ -97,6 +97,10 @@ def custom_signup(request):
     else:
         form = SignupForm()
     return render(request, 'signup.html', {'form': form, 'form_type': 'signup'})
+
+def custom_logout(request):
+    logout(request)
+    return redirect('index')    
     
 def leaderboard(request):
     scores = UserScores.objects.all().order_by('-score')
