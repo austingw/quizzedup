@@ -1,0 +1,34 @@
+{% extends 'base.html' %} {% block content %}
+<div id="history">
+  <h1>Trivia Question History for {{ user.username }}</h1>
+
+  {% for question in trivia %}
+  <div>
+    <h2>Question: {{ question.question }}</h2>
+    <p>
+      Answered: {{ question.answer }} {% if question.correct %}
+      <span>(Correct!)</span>
+      {% else %}
+      <span>(Incorrect...)</span>
+      {% endif %}
+    </p>
+    <p>Submitted at: {{ question.submitted_at }}</p>
+  </div>
+  {% empty %}
+  <p>No trivia questions found.</p>
+  {% endfor %}
+
+  <div>
+    {% if trivia.has_previous %}
+    <a href="?page={{ trivia.previous_page_number }}">Previous</a>
+    {% endif %}
+
+    <span>Page {{ trivia.number }} of {{ trivia.paginator.num_pages }}</span>
+
+    {% if trivia.has_next %}
+    <a href="?page={{ trivia.next_page_number }}">Next</a>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
