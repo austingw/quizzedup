@@ -78,11 +78,12 @@ class SignupForm(UserCreationForm):
 
 def custom_login(request):
     if request.method == 'POST':
-        form = LoginForm(request.POST)
+        form = LoginForm(data=request.POST)
         if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            return redirect('index')
+            user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+            if user is not None:
+                login(request, user)
+                return redirect('index')
     else:
         form = LoginForm()
     return render(request, 'login.html', {'form': form, 'form_type': 'login'})
@@ -106,3 +107,14 @@ def leaderboard(request):
     scores = UserScores.objects.all().order_by('-score')
 
     return render(request, 'leaderboard.html', {'scores': scores})
+
+def user_question_history(request ):
+    username = request.user.username
+    user = User.objects.get(username=username)
+    trivia = Trivia.objects.filter(user=user).order_by('-submitted_at')
+    print(trivia[0].question, trivia[0].answer, trivia[0].correct, trivia[0].user, trivia[0].submitted_at)
+    paginator = Paginator(trivia, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'history.html', {'trivia': page_obj, 'user': user})
