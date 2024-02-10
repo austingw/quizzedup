@@ -1,11 +1,6 @@
 {% extends 'base.html' %} {% block content %}
 
-<div
-  id="leaderboard"
-  hx-get="{% url 'leaderboard' %}"
-  hx-trigger="every 15s"
-  hx-swap="innerHTML swap:0.4s"
->
+<div id="leaderboard">
   <h1>Leaderboard</h1>
   <table>
     <tr>
