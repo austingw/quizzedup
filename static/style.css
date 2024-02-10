@@ -86,7 +86,7 @@ button {
   border: none;
   border-radius: 5px;
   background: linear-gradient(
-    0deg,
+    180deg,
     rgba(255, 0, 0, 1) 0%,
     rgba(255, 154, 0, 1) 10%,
     rgba(208, 222, 33, 1) 20%,
@@ -108,7 +108,7 @@ button {
 button:hover {
   transform: scale(1.1);
   background: linear-gradient(
-    180deg,
+    0deg,
     rgba(255, 0, 0, 1) 0%,
     rgba(255, 154, 0, 1) 10%,
     rgba(208, 222, 33, 1) 20%,
@@ -125,10 +125,11 @@ button:hover {
 
 #question-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   flex-direction: column;
-  margin: 2rem;
+  gap: 2rem;
+  padding: 4rem;
 }
 
 #answered {
@@ -136,7 +137,6 @@ button:hover {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin: 2rem;
 }
 
 #leaderboard {
@@ -144,6 +144,48 @@ button:hover {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin: 2rem;
   font-size: 2rem;
+  padding-bottom: 2rem;
+}
+
+#leaderboard h1 {
+  text-decoration: underline;
+}
+
+input {
+  padding: 1rem;
+  font-size: 1.5rem;
+  border-radius: 5px;
+  border: none;
+  transition: 0.3s;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#login-form,
+#signup-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+#login-form form,
+#signup-form form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: space-between;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+#history {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
 }
